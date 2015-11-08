@@ -1,0 +1,148 @@
+module nat
+
+import bool
+import pair
+
+-- data type definition
+||| A data type to represent the natural numbers.  We use a lower case
+||| "n" in the name to distinguish our nat type from Idris's Nat type
+data nat = O | S nat
+
+||| returns true if the argument is (represents) zero, otherwise false
+isZero: nat -> bool
+isZero O = true
+isZero _ = false
+
+||| returns the successor of any given nat
+succ: nat -> nat
+succ n = S n
+
+||| returns the predecessor of any given nat
+pred: nat -> nat
+pred O = O
+pred (S n) = n
+
+||| return true if the argument is even otherwise false
+evenb: nat -> bool
+evenb O = true
+evenb (S O) = false
+evenb (S (S n)) = evenb n
+
+||| return false if the argument is even otherwise false
+oddb: nat -> bool
+oddb n = not (evenb n)
+
+||| given a pair of natural numbers, return its sum
+addp: pair nat nat -> nat
+addp (mkPair O m) = m
+--addp (mkPair (S n) m) = addp (mkPair n (S m))
+addp (mkPair (S n) m) = S (addp (mkPair n m))
+
+-- binary function for addition
+add: nat -> nat -> nat
+add O m = m
+add (S n) m = S (add n m)
+
+-- example
+pf: nat -> nat
+pf = add (S (S O))
+
+||| given a pair of natural numbers, return its product
+multp: pair nat nat -> nat
+multp (mkPair O m) = O
+multp (mkPair (S n) m) = addp (mkPair m (multp (mkPair n m)))
+
+-- binary function for multiplication
+mult: nat -> nat -> nat
+mult O m = O
+mult (S n) m = add m (mult n m)
+
+||| given a natural number, return the factorial of that number
+factp: nat -> nat
+factp O = (S O)
+factp (S n) = multp (mkPair (S n) (factp (n)))
+
+subp: pair nat nat -> nat
+subp (mkPair O m) = O
+subp (mkPair m O) = m
+subp (mkPair (S n) (S m)) = subp(mkPair n m)
+
+-- binary function for subtraction
+sub: nat -> nat -> nat
+sub O m = O
+sub m O = m
+sub (S n) (S m) = sub n m
+
+-- given a pair of natural number (x, n), return the value of x raised to the
+-- nth power
+exp: pair nat nat -> nat
+exp (mkPair O m) = O
+exp (mkPair (S n) O) = S O
+exp (mkPair m (S n)) = multp (mkPair m (exp (mkPair m n)))
+
+-- binary function for subtraction
+ex: nat -> nat -> nat
+ex O m = O
+ex (S n) O = S O
+ex m (S n) = mult m (ex m n)
+
+-- given a pair of natural number (a, b), return true if a is less than or
+-- equal to b, otherwise return false
+lep: pair nat nat -> bool
+lep (mkPair O m) = true
+lep (mkPair (S n) O) = false
+lep (mkPair (S n) (S m)) = lep (mkPair n m)
+
+-- binary function for less than or equal to
+le: nat -> nat -> bool
+le O m = true
+le (S n) O = false
+le (S n) (S x) = le n x
+
+-- given a pair of natural numbers (a ,b), return true if a is equal to b,
+-- otherwise return false
+eqp: pair nat nat -> bool
+eqp (mkPair O O) = true
+eqp (mkPair (S n) O) = false
+eqp (mkPair O (S n)) = false
+eqp (mkPair (S n) (S m)) = eqp (mkPair n m)
+
+-- binary function for equal to
+eq: nat -> nat -> bool
+eq O O = true
+eq (S n) O = false
+eq O (S n) = false
+eq (S n) (S m) = eq n m
+
+-- given a pair of natural numbers (a, b), return true if a is greater than b,
+-- otherwise return false
+gtp: pair nat nat -> bool
+gtp (mkPair a b) = not(lep(mkPair a b))
+
+-- binary function for greater than
+gt: nat -> nat -> bool
+gt a b = not (le a b)
+
+-- given a pair of natural number (a, b), return true if a is greater than or
+-- equal to b, otherwise return false
+gep: pair nat nat -> bool
+gep (mkPair a b) = xorp (mkPair (gtp (mkPair a b)) (eqp (mkPair a b)))
+
+-- binary function for greater than or equal to
+ge: nat -> nat -> bool
+ge a b = xor (gt a b) (eq a b)
+
+-- given a pair of natural numbers (a, b), return true if a is less than b,
+-- otherwise return false
+ltp: pair nat nat -> bool
+ltp (mkPair a b) = not (gep (mkPair a b))
+
+-- binary function for less than
+lt: nat -> nat -> bool
+lt a b = not (ge a b)
+
+-- fibonacci
+fib: nat -> nat
+fib O = O
+fib (S O) = (S O)
+fib (S (S n)) = addp (mkPair (fib n) (fib(S n)))

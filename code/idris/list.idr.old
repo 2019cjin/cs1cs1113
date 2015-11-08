@@ -1,0 +1,42 @@
+module list_nat
+
+import nat
+import pair
+
+data list_nat = nil | cons nat list_nat
+
+-- examples for data type list_nat
+l0: list_nat
+l0 = nil
+
+l1: list_nat
+l1 = cons O nil
+
+l2: list_nat
+l2 = (cons (S O) (cons (S(S O)) nil))
+
+l3: list_nat
+--l3 = cons (S (S (S O)))(l2)
+l3 = cons (S O)(cons (S (S O))(cons (S (S (S O)))(nil)))
+
+-- functions
+length: list_nat -> nat
+length nil = O
+length (cons (m) (l')) = S(length (l'))
+{-
+length l3
+length (cons (S O) (smaller list))
+S (length(smaller list))
+smaller list = cons (S (S O)) (smaller list2)
+S (S (smaller list2))
+...
+-}
+
+appendp: pair list_nat list_nat -> list_nat
+appendp (mkPair nil l) = l
+appendp (mkPair (cons h t) (l)) = cons h (append (mkPair t l))
+
+-- binary function for append
+append: list_nat -> list_nat -> list_nat
+append nil l = l
+append (cons h t) l = cons h (appends t l)
