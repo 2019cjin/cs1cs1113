@@ -27,4 +27,7 @@ def hs (a):
             else:
                 a = 3*a + 1
         print (a)
+        print (None)
         print (l)
+
+hs (12)
