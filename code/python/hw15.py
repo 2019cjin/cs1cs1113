@@ -9,7 +9,7 @@ def hs (a):
             if ((a % 2) == 0):
                 a = a//2
             else:
-                a = 3*a + 1
+                a = 1 + 3*a
         print (a)
         print (None)
         print (l)

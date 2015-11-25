@@ -130,7 +130,7 @@ set_product: (s1: set a) -> (s2: set b) -> set (pair a b)
 -- For example, the powerset of {1, 2, 3} is the following set:
 -- { {}, {1}, {2}, {3}, {1, 2}, {1, 3}, {2, 3}, {1, 2, 3} }. The
 -- cardinality of the powerset of a set of cardinality n is 2^n.
-set_powerset: (s: set a) -> set (set a)
+-- set_powerset: (s: set a) -> set (set a)
 
 
 -- return true if s1 and s2 are equal, else false

@@ -43,6 +43,7 @@ eql_bool true true = true
 eql_bool false false = true
 eql_bool _ _ = false
 
+
 instance Serialize bool where
   toString true = "True"
   toString false = "False"

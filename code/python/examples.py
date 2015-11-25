@@ -27,12 +27,19 @@ else:
 # go through true branch
 # {(x, 0), (y, 6), (z, 10)}
 
+print (x)
+print (z)
+
 if (x > 0 or y == x):
     x = 0
 else:
     x = 1
     z = 11
 
+
+print (x)
+print (y)
+print (z)
 # evaluate conditional expression
 '''
 first evaluate expression x > 0
@@ -74,4 +81,7 @@ while (times > 0):
 def fun(a, b, c, x):
     result = a * (x * x) + b * x + c
     return result
-    
+
+a = fun (1, 2, 3, 4)
+print ("a =")
+print (a)

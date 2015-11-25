@@ -236,7 +236,6 @@ product3 = set_product set4 set7
 --               (mkPair true (S O)) ::
 --               (mkPair true (S (S O))) ::
 --               (mkPair false O) ::
---               (mkPair false O) ::
 --               (mkPair false (S O)) ::
 --               (mkPair false (S (S O))) :: nil)
 
